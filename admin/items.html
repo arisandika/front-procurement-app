@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Items | Procurement App</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+  <body
+    class="bg-[#0f172a] text-slate-100 font-sans antialiased sidebar-cart-collapsed"
+  >
+    <!-- Sidebar -->
+    <aside
+      id="sidebar"
+      class="fixed top-0 left-0 z-40 w-72 h-screen bg-slate-900 border-r border-slate-800 flex flex-col overflow-hidden"
+    >
+      <!-- Logo Area -->
+      <div
+        class="px-6 py-4 flex items-center justify-between border-b border-slate-800"
+      >
+        <div class="flex items-center gap-3 text-sm font-medium">
+          <img
+            src="https://fleetify.id/logos/fleetify.png"
+            alt="logo"
+            class="h-8 w-auto"
+          />
+        </div>
+        <button
+          id="close-sidebar"
+          class="lg:hidden p-2 hover:bg-slate-800 rounded-lg"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
+        <!-- General -->
+        <div class="">
+          <a
+            href="./dashboard.html"
+            class="flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-800 group"
+          >
+            <div class="flex items-center gap-3 text-sm font-medium">
+              <i
+                data-lucide="layout-dashboard"
+                class="w-5 h-5 text-slate-400 group-hover:text-blue-500"
+              ></i>
+              <span>Dashboard</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Management Pembelian Barang -->
+        <div class="space-y-1">
+          <button
+            class="nav-section-toggle w-full flex items-center justify-between p-2 text-xs font-semibold uppercase text-slate-500 tracking-wider hover:text-slate-300 transition-colors cursor-pointer"
+          >
+            <span>Manajemen Barang</span>
+            <i data-lucide="chevron-up" class="w-4 h-4 rotate-icon"></i>
+          </button>
+          <div class="nav-section-content space-y-1">
+            <a
+              href="./suppliers.html"
+              class="flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-800 group"
+            >
+              <div class="flex items-center gap-3 text-sm font-medium">
+                <i
+                  data-lucide="truck"
+                  class="w-5 h-5 text-slate-400 group-hover:text-blue-500"
+                ></i>
+                <span>Supplier</span>
+              </div>
+            </a>
+            <a
+              href="./items.html"
+              class="flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-800 group"
+            >
+              <div class="flex items-center gap-3 text-sm font-medium">
+                <i
+                  data-lucide="package"
+                  class="w-5 h-5 text-slate-400 group-hover:text-blue-500"
+                ></i>
+                <span>Barang</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Management Transaksi -->
+        <div class="space-y-1">
+          <button
+            class="nav-section-toggle w-full flex items-center justify-between p-2 text-xs font-semibold uppercase text-slate-500 tracking-wider hover:text-slate-300 transition-colors cursor-pointer"
+          >
+            <span>Manajemen Transaksi</span>
+            <i data-lucide="chevron-up" class="w-4 h-4 rotate-icon"></i>
+          </button>
+          <div class="nav-section-content space-y-1">
+            <a
+              href="./transactions.html"
+              class="flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-800 group"
+            >
+              <div class="flex items-center gap-3 text-sm font-medium">
+                <i
+                  data-lucide="shopping-cart"
+                  class="w-5 h-5 text-slate-400 group-hover:text-blue-500"
+                ></i>
+                <span>Pembelian Barang</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="p-4 border-t border-slate-800 text-center">
+        <button
+          type="button"
+          id="logoutButton"
+          class="text-xs uppercase tracking-widest font-bold text-red-500 cursor-pointer transition-colors"
+        >
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Cart Sidebar -->
+    <aside
+      id="sidebar-cart"
+      class="fixed top-0 right-0 z-40 w-72 h-screen bg-slate-900 border-l border-slate-800 flex flex-col overflow-hidden"
+    >
+      <div
+        class="px-6 py-4 flex items-center justify-between border-b border-slate-800"
+      >
+        <div
+          class="w-full flex items-center justify-between gap-3 text-sm font-medium"
+        >
+          <div class="text-base font-semibold">Keranjang</div>
+
+          <button
+            id="close-cart-sidebar"
+            class="p-2 bg-slate-800 hover:bg-slate-800 rounded-lg text-slate-400 cursor-pointer"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar"></div>
+      <div class="p-4 border-t border-slate-800">
+        <button
+          id="submitPurchase"
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg shadow-blue-500/20 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#111827] cursor-pointer"
+        >
+          Submit Order
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="ml-72 min-h-screen">
+      <!-- Top Navbar -->
+      <header
+        class="sticky top-0 z-30 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 h-16 flex items-center px-6"
+      >
+        <button
+          id="toggle-sidebar"
+          class="p-2 bg-slate-800 hover:bg-slate-800 rounded-lg mr-4 text-slate-400 cursor-pointer"
+        >
+          <i data-lucide="menu" class="w-4 h-4"></i>
+        </button>
+
+        <div class="flex-1"></div>
+
+        <div class="flex items-center gap-4">
+          <div
+            class="flex items-center gap-3 text-sm font-medium pl-4 border-l border-slate-800"
+          >
+            <div class="text-left hidden sm:block">
+              <p id="username" class="text-sm"></p>
+              <p id="role" class="text-xs text-slate-500"></p>
+            </div>
+            <div
+              id="toggle-cart"
+              class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-400 ring-2 ring-blue-500/20 cursor-pointer"
+            >
+              <i
+                data-lucide="shopping-cart"
+                class="w-5 h-5 text-slate-400 group-hover:text-blue-500"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="p-6 lg:p-8 space-y-8 max-w-7xl mx-auto">
+        <!-- Detail Supplier Section -->
+        <div class="space-y-8">
+          <div class="flex items-end">
+            <div>
+              <nav class="fi-breadcrumbs mb-2 hidden sm:block">
+                <ol
+                  class="fi-breadcrumbs-list flex flex-wrap items-center gap-x-2"
+                >
+                  <li class="fi-breadcrumbs-item flex items-center gap-x-2">
+                    <span
+                      class="fi-breadcrumbs-item-label text-sm font-medium text-gray-500 dark:text-gray-400"
+                    >
+                      Items
+                    </span>
+                  </li>
+                  <li class="fi-breadcrumbs-item flex items-center gap-x-2">
+                    <svg
+                      class="fi-breadcrumbs-item-separator flex h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      data-slot="icon"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <svg
+                      class="fi-breadcrumbs-item-separator flex h-5 w-5 text-gray-400 dark:text-gray-500 ltr:hidden"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      data-slot="icon"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span
+                      class="fi-breadcrumbs-item-label text-sm font-medium text-gray-500 dark:text-gray-400"
+                    >
+                      List
+                    </span>
+                  </li>
+                </ol>
+              </nav>
+              <h2 class="text-3xl font-bold tracking-tight">Items</h2>
+            </div>
+            <button
+              onclick="openCreateModal()"
+              class="ml-auto bg-blue-500 hover:bg-blue-500/80 text-white font-semibold px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer"
+            >
+              Buat Items Baru
+            </button>
+          </div>
+
+          <div
+            class="bg-slate-900 rounded-xl border border-slate-800 shadow-sm overflow-hidden"
+          >
+            <div class="bg-[#111827]">
+              <!-- Table Header -->
+              <div
+                class="px-4 py-5 flex flex-col md:flex-row md:items-center justify-end gap-4"
+              >
+                <div class="relative max-w-sm">
+                  <span
+                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500"
+                  >
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    class="w-full pl-9 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  />
+                </div>
+              </div>
+
+              <!-- Data Table -->
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                  <thead class="bg-white/5">
+                    <tr
+                      class="text-white font-medium text-sm font-semibold border-b border-slate-800"
+                    >
+                      <th class="px-6 py-4">ID</th>
+                      <th class="px-5 py-4">Nama</th>
+                      <th class="px-5 py-4">Stok</th>
+                      <th class="px-5 py-4">Harga</th>
+                      <th class="px-5 py-4"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="itemTableBody"></tbody>
+                </table>
+              </div>
+
+              <!-- Pagination -->
+              <div
+                class="px-4 py-5 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-end gap-4"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Items Modal -->
+    <div
+      id="itemModal"
+      class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50"
+    >
+      <div
+        class="bg-slate-900 rounded-xl w-full max-w-lg border border-slate-800"
+      >
+        <!-- Header -->
+        <div class="px-8 py-4 border-b border-slate-800 flex items-center">
+          <h3 id="modalTitle" class="text-lg font-semibold">Item</h3>
+        </div>
+
+        <!-- Body -->
+        <div class="p-8 space-y-4">
+          <input type="hidden" id="itemId" />
+
+          <div>
+            <label
+              for="itemName"
+              class="block text-sm font-medium text-slate-300 mb-2"
+              >Name</label
+            >
+            <input
+              id="itemName"
+              class="w-full bg-[#1F2937] border border-slate-700 rounded-lg px-4 py-1.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            />
+          </div>
+
+          <div>
+            <label
+              for="itemStock"
+              class="block text-sm font-medium text-slate-300 mb-2"
+              >Stock</label
+            >
+            <input
+              id="itemStock"
+              class="w-full bg-[#1F2937] border border-slate-700 rounded-lg px-4 py-1.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            />
+          </div>
+
+          <div>
+            <label
+              for="itemPrice"
+              class="block text-sm font-medium text-slate-300 mb-2"
+              >Price</label
+            >
+            <input
+              id="itemPrice"
+              type="number"
+              class="w-full bg-[#1F2937] border border-slate-700 rounded-lg px-4 py-1.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            />
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="px-8 py-4 border-t border-slate-800 flex justify-end gap-2">
+          <button
+            id="saveItem"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg shadow-blue-500/20 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#111827] cursor-pointer"
+          >
+            Save
+          </button>
+          <button
+            id="cancelModal"
+            class="bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg shadow-slate-500/20 transition-all focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:ring-offset-[#111827] cursor-pointer"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        requireAuth();
+
+        const payload = parseJwt(localStorage.getItem("token"));
+
+        $("#username").text(payload.username);
+        $("#role").text(payload.role);
+        handleLogout();
+
+        loadItems();
+        loadCart();
+      });
+    </script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/cart.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/jwt.js"></script>
+
+    <script src="../assets/js/transactions.js"></script>
+    <script src="../assets/js/items.js"></script>
+  </body>
+</html>

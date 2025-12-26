@@ -1,0 +1,69 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+@theme {
+    --color-primary: #3b82f6;
+    --color-primary-dark: #2563eb;
+}
+
+/* Custom scrollbar for sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+
+/* Sidebar transition */
+#sidebar {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#main-content {
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-collapsed #sidebar {
+    width: 0;
+    transform: translateX(-100%);
+}
+
+.sidebar-collapsed #main-content {
+    margin-left: 0;
+}
+
+/* Cart sidebar transition */
+#sidebar-cart {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-cart-collapsed #sidebar-cart {
+    width: 0;
+    display: none;
+}
+
+.sidebar-cart-collapsed #main-content {
+    margin-right: 0;
+}
+
+/* Rotation for collapse icon */
+.rotate-icon {
+    transition: transform 0.3s ease;
+}
+
+.collapsed .rotate-icon {
+    transform: rotate(-180deg);
+}
+
+/* Hide horizontal scrollbar for tabs */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
