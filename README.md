@@ -53,7 +53,7 @@ git clone https://github.com/arisandika/front-procurement-app.git
 
 ---
 
-## ✅ Notes
+## Notes
 
 - Semua operasi frontend menggunakan **AJAX** ke backend API: http://localhost:3000/api/...  
 - Cart disimpan di **localStorage**, sehingga tetap ada walau pindah halaman.  
