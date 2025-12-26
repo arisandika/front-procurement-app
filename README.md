@@ -23,7 +23,7 @@ Mendukung fitur CRUD master data, purchasing dengan cart, dan dashboard summary.
 
 git clone https://github.com/arisandika/front-procurement-app.git
 
-`cd frontend-procurement-app`
+`cd front-procurement-app`
 
 2. **Pastikan backend sudah berjalan** di http://localhost:3000
 
